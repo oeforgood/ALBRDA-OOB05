@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vers une offre régénérative — OOB 05 Randonnée · Oé</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-200:#5DCAA5;
+  --teal-400:#1D9E75;--teal-600:#0F6E56;--teal-800:#085041;
+  --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-400:#BA7517;--amber-600:#854F0B;
+  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-400:#378ADD;--blue-600:#185FA5;
+  --sand:#F7F4EF;--sand-d:#EDE9E1;
+  --ink:#1C1C1A;--ink-60:#5C5C58;--ink-30:#A8A8A3;
+  --white:#FFFFFF;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;
+  --sh-sm:0 1px 4px rgba(28,28,26,.07);
+  --sh-md:0 6px 32px rgba(28,28,26,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--ink);line-height:1.65;font-size:16px;min-height:100vh}
+
+/* ── HERO ── */
+.hero{background:var(--teal-800);color:var(--white);padding:4rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 0%,rgba(29,158,117,.32) 0%,transparent 60%),radial-gradient(ellipse at 10% 85%,rgba(93,202,165,.15) 0%,transparent 50%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-100);margin-bottom:1.4rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,5vw,3rem);font-weight:500;line-height:1.15;margin-bottom:1rem}
+.hero-lead{max-width:640px;margin:0 auto 1.5rem;font-size:.95rem;color:rgba(255,255,255,.72);font-weight:300;line-height:1.8}
+.oob-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 16px;font-size:12px;color:rgba(255,255,255,.85);margin-bottom:1.5rem}
+.scale-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin-top:.5rem}
+.scale-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 13px;font-size:11.5px;color:rgba(255,255,255,.82)}
+.scale-pill.oui{background:rgba(29,158,117,.25);border-color:rgba(159,225,203,.4)}
+.scale-pill.adapt{background:rgba(186,117,23,.25);border-color:rgba(250,199,117,.4)}
+.scale-pill.later{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)}
+.scale-pill.non{background:rgba(168,168,163,.15);border-color:rgba(168,168,163,.3)}
+
+/* ── LAYOUT ── */
+.page-body{max-width:860px;margin:0 auto;padding:3rem 1.25rem 7rem}
+
+/* ── THEME BLOCK ── */
+.theme-block{background:var(--white);border-radius:var(--r-lg);box-shadow:var(--sh-sm);margin-bottom:2.5rem;overflow:hidden;border:1px solid rgba(28,28,26,.06)}
+.theme-header{padding:2rem 2.5rem 1.75rem;color:var(--white)}
+.theme-num{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-100);margin-bottom:.3rem}
+.theme-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;margin-bottom:.2rem}
+.theme-sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:1.1rem;font-style:italic}
+.theme-intro{font-size:13.5px;line-height:1.82;color:rgba(255,255,255,.82);font-weight:300;max-width:700px}
+
+/* dim colors */
+.dim-1 .theme-header{background:linear-gradient(135deg,var(--teal-800) 0%,var(--teal-600) 100%)}
+.dim-2 .theme-header{background:linear-gradient(135deg,#0C447C 0%,#185FA5 100%)}
+.dim-3 .theme-header{background:linear-gradient(135deg,#27500A 0%,#3B6D11 100%)}
+.dim-4 .theme-header{background:linear-gradient(135deg,#4A1B0C 0%,#712B13 100%)}
+.dim-5 .theme-header{background:linear-gradient(135deg,#26215C 0%,#534AB7 100%)}
+.dim-6 .theme-header{background:linear-gradient(135deg,#633806 0%,#854F0B 100%)}
+
+/* ── QUESTIONS ── */
+.questions-list{padding:0 0 .5rem}
+.question-row{padding:1.35rem 2.5rem 1.25rem;border-bottom:1px solid rgba(28,28,26,.06);transition:background .15s}
+.question-row:last-child{border-bottom:none}
+.question-row:hover{background:var(--sand)}
+.q-header{display:flex;gap:11px;align-items:flex-start;margin-bottom:.6rem}
+.q-num{font-size:11px;font-weight:500;color:var(--teal-400);background:var(--teal-50);border-radius:4px;padding:2px 7px;white-space:nowrap;margin-top:2px;flex-shrink:0}
+.q-text{font-size:14px;line-height:1.68;color:var(--ink);font-weight:500}
+.q-actors{display:flex;flex-wrap:wrap;gap:5px;margin-left:32px;margin-bottom:.75rem}
+.actor-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 9px;border-radius:20px;background:var(--sand);color:var(--ink-60);border:1px solid var(--sand-d)}
+.coop-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 9px;border-radius:20px;background:var(--blue-50);color:var(--blue-600);border:1px solid var(--blue-100)}
+
+/* ── CHOIX ── */
+.choice-row{display:flex;flex-wrap:wrap;gap:6px;margin-left:32px}
+.cb{border:1px solid rgba(28,28,26,.14);border-radius:var(--r-sm);padding:7px 13px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;background:var(--white);color:var(--ink-60);transition:all .12s;font-weight:400;white-space:nowrap}
+.cb:hover{border-color:var(--teal-200);color:var(--teal-600);background:var(--teal-50)}
+.cb.sel-oui{background:var(--teal-400);border-color:var(--teal-400);color:var(--white);font-weight:500}
+.cb.sel-adapt{background:var(--amber-400);border-color:var(--amber-400);color:var(--white);font-weight:500}
+.cb.sel-later{background:var(--ink-30);border-color:var(--ink-30);color:var(--white);font-weight:500}
+.cb.sel-non{background:var(--sand-d);border-color:var(--sand-d);color:var(--ink-60);font-weight:500}
+
+/* ── BARRE ── */
+.score-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid rgba(28,28,26,.09);padding:.85rem 1.75rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;z-index:100;box-shadow:0 -4px 24px rgba(28,28,26,.09)}
+.sc-counts{display:flex;gap:12px}
+.sc-item{display:flex;flex-direction:column;align-items:center}
+.sc-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;line-height:1}
+.sc-num.oui{color:var(--teal-400)}
+.sc-num.adapt{color:var(--amber-400)}
+.sc-num.later{color:var(--ink-30)}
+.sc-num.non{color:var(--ink-30)}
+.sc-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-30);margin-top:1px}
+.prog-wrap{flex:1;min-width:100px}
+.prog-track{height:5px;background:var(--sand-d);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--teal-400);border-radius:3px;transition:width .4s ease;width:0%}
+.prog-legend{font-size:11px;color:var(--ink-30);margin-top:3px}
+.bar-btns{display:flex;gap:8px;margin-left:auto}
+.btn-mail{background:var(--teal-400);color:var(--white);border:none;border-radius:var(--r-md);padding:10px 18px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .15s,transform .1s;display:flex;align-items:center;gap:6px}
+.btn-mail:hover{background:var(--teal-600)}
+.btn-mail:active{transform:scale(.98)}
+.btn-reset{background:transparent;color:var(--ink-60);border:1px solid rgba(28,28,26,.18);border-radius:var(--r-md);padding:10px 14px;font-size:12.5px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .12s}
+.btn-reset:hover{background:var(--sand)}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,28,26,.55);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--r-lg);padding:2.5rem 2rem 2rem;max-width:460px;width:100%;box-shadow:var(--sh-md);animation:slideUp .22s ease}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:500;margin-bottom:.4rem;color:var(--ink)}
+.modal-lead{font-size:13px;color:var(--ink-60);margin-bottom:1.5rem;line-height:1.72}
+.modal label{display:block;font-size:11.5px;font-weight:500;color:var(--ink-60);margin-bottom:5px;letter-spacing:.03em;text-transform:uppercase}
+.modal input,.modal textarea{display:block;width:100%;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;border:1px solid rgba(28,28,26,.18);border-radius:var(--r-md);margin-bottom:1rem;background:var(--sand);color:var(--ink);outline:none;transition:border-color .15s,background .15s;resize:vertical}
+.modal input:focus,.modal textarea:focus{border-color:var(--teal-400);background:var(--white)}
+.modal-hint{font-size:11px;color:var(--ink-30);margin-top:-10px;margin-bottom:1rem;font-style:italic}
+.modal-actions{display:flex;gap:9px;margin-top:.5rem}
+.btn-validate{flex:1;background:var(--teal-400);color:var(--white);border:none;border-radius:var(--r-md);padding:12px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .15s}
+.btn-validate:hover{background:var(--teal-600)}
+.btn-validate:disabled{background:var(--ink-30);cursor:not-allowed}
+.btn-cancel{background:transparent;color:var(--ink-60);border:1px solid rgba(28,28,26,.18);border-radius:var(--r-md);padding:12px 16px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s}
+.btn-cancel:hover{background:var(--sand)}
+.modal-status{font-size:12.5px;margin-top:.85rem;text-align:center;min-height:18px;line-height:1.5}
+.modal-status.ok{color:var(--teal-600)}
+.modal-status.err{color:#c0392b}
+
+.btn-add-participant{background:transparent;color:var(--teal-600);border:1px dashed var(--teal-200);border-radius:var(--r-md);padding:8px 14px;font-size:12.5px;font-family:'DM Sans',sans-serif;cursor:pointer;width:100%;margin-bottom:1rem;transition:all .12s}
+.btn-add-participant:hover{background:var(--teal-50)}
+.participant-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:8px;align-items:center}
+.participant-row input{margin-bottom:0;font-size:13px;padding:8px 11px}
+.btn-remove-p{background:none;border:none;color:var(--ink-30);cursor:pointer;font-size:16px;padding:4px 6px;border-radius:var(--r-sm);transition:color .12s}
+.btn-remove-p:hover{color:#c0392b}
+.footer{text-align:center;padding:1.5rem 1rem 8rem;font-size:12px;color:var(--ink-30)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">Oé — Oenotourisme régénératif · Aix-les-Bains Riviera des Alpes</div>
+  <h1>Vers une offre<br>oenotouristique régénérative</h1>
+  <div class="oob-tag">🥾 OOB 05 — Randonnée Route des Vins de Savoie · Journée complète · 6–7h</div>
+  <p class="hero-lead">Ce questionnaire vous propose environ 50 pistes concrètes pour faire évoluer votre offre de base vers une démarche régénérative. Pour chaque suggestion, indiquez simplement votre intention.</p>
+  <div class="scale-bar">
+    <span class="scale-pill oui">✓ Je veux</span>
+    <span class="scale-pill adapt">✏ Je veux, en l'adaptant</span>
+    <span class="scale-pill later">⏳ Plus tard</span>
+    <span class="scale-pill non">✗ Pas pour moi</span>
+  </div>
+</header>
+
+<main class="page-body" id="questionnaire"></main>
+<footer class="footer">© Oé — Tous droits réservés</footer>
+
+<div class="score-bar">
+  <div class="sc-counts">
+    <div class="sc-item"><span class="sc-num oui" id="cnt-oui">0</span><span class="sc-lbl">Je veux</span></div>
+    <div class="sc-item"><span class="sc-num adapt" id="cnt-adapt">0</span><span class="sc-lbl">En adaptant</span></div>
+    <div class="sc-item"><span class="sc-num later" id="cnt-later">0</span><span class="sc-lbl">Plus tard</span></div>
+    <div class="sc-item"><span class="sc-num non" id="cnt-non">0</span><span class="sc-lbl">Pas pour moi</span></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="prog-legend" id="prog-legend">0 / 50 suggestions évaluées</div>
+  </div>
+  <div class="bar-btns">
+    <button class="btn-reset" onclick="resetAll()">↺ Réinitialiser</button>
+    <button class="btn-mail" onclick="openModal()">✉ Recevoir mon rapport par mail</button>
+  </div>
+</div>
+
+<!-- MODALE -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">Recevoir votre rapport par mail</h2>
+    <p class="modal-lead">Renseignez les participants au groupe de travail. Chacun recevra le récapitulatif complet des choix effectués ensemble.</p>
+    <label for="inp-org">Nom de l'organisation / du projet</label>
+    <input type="text" id="inp-org" value="Aix-les-Bains Riviera des Alpes" readonly style="background:var(--sand-d);color:var(--ink-60);cursor:default;border-color:transparent">
+    <label>Participants — nom et adresse mail</label>
+    <div id="participants-list"></div>
+    <button class="btn-add-participant" onclick="ajouterParticipant()">+ Ajouter un participant</button>
+    <p class="modal-hint">Chaque participant recevra le rapport individuellement par mail.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-validate" id="btn-validate" onclick="envoyerRapport()">Envoyer le rapport</button>
+    </div>
+    <div class="modal-status" id="modal-status"></div>
+  </div>
+</div>
+
+<script>
+const CFG = {
+  publicKey:  'TODO_TA_PUBLIC_KEY',
+  serviceId:  'TODO_TON_SERVICE_ID',
+  templateId: 'TODO_TON_TEMPLATE_ID',
+  adminBcc:   'fx@oeforgood.com',
+};
+
+const ACTORS = {
+  vigneron:  '🌿 Vigneron',
+  guide:     '🗺 Guide / animateur',
+  orga:      '🎟 Organisateur / OT',
+  resto:     '🍽 Restaurateur / traiteur',
+  heberg:    '🛏 Hébergeur',
+  collectif: '📍 Collectivité / territoire',
+};
+
+const DIMS = [
+  {
+    num:'Dimension 1', title:'Valeur & impact',
+    sub:'Créer de la valeur au-delà du chiffre d\'affaires · Partager équitablement',
+    css:'dim-1',
+    intro:"Une offre oenotouristique génère de la valeur économique — billetterie, ventes de vins, restauration. Mais dans une démarche régénérative, cette valeur ne s'arrête pas là : elle doit aussi profiter à ceux qui la rendent possible — les vignerons, les guides, les producteurs locaux — et contribuer à des biens communs : la restauration des sols, la protection du lac, la transition agricole du territoire. Les suggestions de cette partie vous invitent à réfléchir à qui bénéficie de votre offre, comment la valeur est partagée, et si votre tarification raconte honnêtement ce que vous faites vraiment.",
+    qs:[
+      {t:"Reverser 1 € par participant à un projet local concret — replantation de haies, soutien à un vigneron en conversion bio, protection du lac du Bourget — et l'annoncer sur la fiche de l'offre.", actors:['orga'], coop:false},
+      {t:"Afficher sur la fiche de l'offre combien chaque vigneron visité est payé pour sa participation, pour que les participants comprennent que leur billet soutient directement un producteur local.", actors:['orga','vigneron'], coop:true},
+      {t:"Proposer aux participants d'acheter une bouteille directement au domaine à la fin de la randonnée, sans commission prélevée par l'organisateur.", actors:['orga','vigneron'], coop:true},
+      {t:"Créer une formule « engagement + randonnée » où une partie du prix du billet finance le parrainage d'un pied de vigne pour le participant.", actors:['orga','vigneron'], coop:true},
+      {t:"Rémunérer le guide ou l'animateur au-dessus du tarif habituel pour valoriser son expertise sur les cépages autochtones et la biodiversité du vignoble.", actors:['orga','guide'], coop:true},
+      {t:"Reverser une partie des bénéfices de l'offre à une association locale de protection de la biodiversité ou de restauration des sols viticoles.", actors:['orga'], coop:false},
+      {t:"Proposer une tarification solidaire : un prix réduit pour les habitants du territoire, financé par une légère majoration sur le tarif touriste.", actors:['orga'], coop:false},
+      {t:"Intégrer dans la communication sur l'offre le coût réel de production d'une bouteille de vin en agriculture biologique, pour que les participants comprennent la valeur de ce qu'ils dégustent.", actors:['guide','vigneron'], coop:true},
+    ]
+  },
+  {
+    num:'Dimension 2', title:'Vision systémique & limites',
+    sub:'Comprendre les interdépendances · Savoir se limiter',
+    css:'dim-2',
+    intro:"Un vignoble n'est pas une carte postale : c'est un système vivant, connecté au lac, aux forêts, aux zones humides, au climat et aux pratiques agricoles alentour. Une offre oenotouristique régénérative aide les participants à voir ces connexions — pas à les ignorer. Elle assume aussi ses propres limites : combien de personnes, à quelle fréquence, sur quel itinéraire, sans dégrader ce qu'elle est censée faire découvrir. Les suggestions de cette partie vous invitent à intégrer cette complexité dans votre offre, honnêtement et sans simplifier à outrance.",
+    qs:[
+      {t:"Expliquer aux participants, pendant la randonnée, comment la qualité de l'eau du lac du Bourget influence directement le profil aromatique des vins produits sur les coteaux environnants.", actors:['guide'], coop:false},
+      {t:"Intégrer un arrêt dédié à l'observation du paysage global — vignes, forêts, lac, zones humides — pour expliquer en quoi chaque élément joue un rôle dans l'équilibre du territoire.", actors:['guide'], coop:false},
+      {t:"Aborder honnêtement les impacts négatifs de la randonnée elle-même : piétinement des abords, déchets, bruit — et proposer des règles collectives pour les limiter.", actors:['guide','orga'], coop:true},
+      {t:"Limiter le nombre de participants par groupe à un maximum défini (ex. 12 personnes) pour préserver la qualité de l'expérience et réduire le piétinement des parcelles.", actors:['orga'], coop:false},
+      {t:"Expliquer aux participants les effets du changement climatique déjà visibles sur ce vignoble — gel tardif, sécheresse, modification des dates de vendange — et ce que font les vignerons pour s'adapter.", actors:['guide','vigneron'], coop:true},
+      {t:"Proposer plusieurs variantes de la randonnée selon la saison, pour montrer que le vignoble est vivant et en transformation permanente, et non figé dans une image touristique.", actors:['orga','guide'], coop:true},
+      {t:"Choisir un itinéraire qui passe uniquement par des domaines cohérents dans leurs pratiques — sans mélanger des exploitations bio et des exploitations en agriculture conventionnelle intensive.", actors:['orga','vigneron'], coop:true},
+    ]
+  },
+  {
+    num:'Dimension 3', title:'Régénération des écosystèmes',
+    sub:'Renforcer les services écosystémiques · Utiliser des substances bio-assimilables',
+    css:'dim-3',
+    intro:"Aller au-delà du « ne pas abîmer » : c'est le défi de cette dimension. Une offre régénérative ne se contente pas de traverser un beau paysage sans le dégrader — elle contribue activement à le renforcer. Cela peut passer par des gestes simples : observer un sol vivant, planter un cep, poser un nichoir, choisir des domaines qui pratiquent l'enherbement. L'objectif est que chaque groupe qui passe laisse le vignoble dans un état légèrement meilleur qu'à son arrivée — ou au moins que les participants repartent avec une conscience nouvelle de ce qui fait vivre ces écosystèmes.",
+    qs:[
+      {t:"Intégrer un arrêt dans une parcelle cultivée sans pesticides, où les participants peuvent creuser à mains nues pour observer les vers de terre, les racines et la vie du sol.", actors:['guide','vigneron'], coop:true},
+      {t:"Proposer aux participants de planter un pied de vigne d'un cépage autochtone menacé (Persan, Mondeuse blanche…) pendant la randonnée — une action physique, même courte.", actors:['guide','vigneron'], coop:true},
+      {t:"Organiser un comptage rapide d'insectes pollinisateurs dans une parcelle en bordure de haie, pour rendre tangible le lien entre biodiversité et production viticole.", actors:['guide','vigneron'], coop:true},
+      {t:"Choisir des domaines visités qui pratiquent l'enherbement inter-rang ou la traction animale, et l'expliquer aux participants comme une pratique qui régénère activement les sols.", actors:['guide','vigneron'], coop:true},
+      {t:"Intégrer une haie, une mare ou une zone humide sur le parcours et expliquer son rôle dans la régulation du cycle de l'eau pour le vignoble.", actors:['guide','collectif'], coop:true},
+      {t:"Proposer aux participants de poser un nichoir à chauve-souris ou à mésange dans un domaine partenaire — les chauves-souris mangent jusqu'à 3 000 insectes nuisibles par nuit.", actors:['guide','vigneron'], coop:true},
+      {t:"Éviter les parcours qui traversent des zones sensibles (nidification, zones humides) aux périodes critiques — et l'expliquer ouvertement si un itinéraire est modifié pour cette raison.", actors:['orga','collectif'], coop:true},
+      {t:"Travailler avec un ou plusieurs vignerons en cours de conversion bio pour que les participants voient concrètement à quoi ressemble une transition, avec ses contraintes et ses résultats.", actors:['orga','vigneron'], coop:true},
+    ]
+  },
+  {
+    num:'Dimension 4', title:'Résilience organisationnelle',
+    sub:'Chercher un équilibre entre performance et robustesse',
+    css:'dim-4',
+    intro:"Une offre fragile ne peut pas être régénérative. Si elle repose sur un seul vigneron, un seul guide, une seule saison ou une seule météo favorable, elle s'effondre au premier aléa — et entraîne ses partenaires dans sa chute. La résilience, c'est construire une offre qui tient dans la durée : diversifiée dans ses partenaires, adaptable aux conditions, documentée pour ne pas tout perdre si quelqu'un se retire, et équilibrée entre ambition et faisabilité. Les suggestions de cette partie vous invitent à tester la robustesse de votre modèle avant qu'une crise ne le fasse à votre place.",
+    qs:[
+      {t:"S'appuyer sur au moins trois domaines différents sur le parcours, pour ne pas dépendre d'un seul vigneron et pouvoir continuer l'offre si l'un d'eux se retire.", actors:['orga','vigneron'], coop:true},
+      {t:"Prévoir une version de la randonnée adaptable à la météo — itinéraire raccourci, cave visitée en priorité — sans annuler systématiquement quand il pleut.", actors:['orga','guide'], coop:true},
+      {t:"Construire l'offre avec un calendrier sur 3 ans, pour donner de la visibilité aux vignerons partenaires et leur permettre de s'organiser à l'avance.", actors:['orga','vigneron'], coop:true},
+      {t:"Prévoir un fond de réserve pour absorber une mauvaise saison — si les vignes sont touchées par le gel ou la grêle — sans annuler l'offre ni pénaliser les partenaires.", actors:['orga'], coop:false},
+      {t:"Former le guide sur les bases de l'agroécologie et de la biodiversité viticole, pour que son discours soit autonome et ne dépende pas entièrement de la présence du vigneron.", actors:['orga','guide'], coop:true},
+      {t:"Proposer une offre qui fonctionne aussi pour les habitants du territoire, pas seulement pour les touristes — pour lisser les variations de fréquentation saisonnière.", actors:['orga'], coop:false},
+      {t:"Documenter le contenu de l'offre (itinéraire, étapes, discours) pour qu'elle puisse être reprise et animée par d'autres guides si l'animateur principal n'est pas disponible.", actors:['orga','guide'], coop:true},
+    ]
+  },
+  {
+    num:'Dimension 5', title:'Relations & coopération',
+    sub:'Créer des relations vivifiantes · Développer des relations réciproques',
+    css:'dim-5',
+    intro:"Le vivant fonctionne par coopération, pas par extraction. Une randonnée oenotouristique met en relation des participants, des vignerons, des guides, des producteurs, un territoire. La question régénérative est : est-ce que ces relations énergisent ceux qui y participent, ou est-ce qu'elles les épuisent ? Est-ce que les vignerons y gagnent quelque chose au-delà d'une heure de visite ? Est-ce que les participants repartent engagés, pas juste satisfaits ? Les suggestions de cette partie visent à transformer des rencontres ponctuelles en relations qui durent et qui se nourrissent mutuellement.",
+    qs:[
+      {t:"À la fin de la randonnée, demander à chaque participant d'écrire sur une carte ce qu'il s'engage à faire concrètement : recommander le domaine, acheter une bouteille, en parler à un ami restaurateur.", actors:['guide'], coop:false},
+      {t:"Proposer aux participants de s'abonner à une lettre saisonnière d'un des vignerons visités — une photo, trois lignes sur ce qui se passe dans les vignes — pour entretenir le lien après la visite.", actors:['vigneron','orga'], coop:true},
+      {t:"Inviter un producteur local complémentaire (apiculteur, maraîcher, fromager) à participer à une étape de la randonnée pour montrer comment les activités se nourrissent mutuellement.", actors:['orga','vigneron'], coop:true},
+      {t:"Organiser une fois par an une randonnée « à l'envers » — où ce sont les vignerons qui se baladent chez leurs voisins maraîchers, fromagers ou apiculteurs — pour renforcer les liens du territoire.", actors:['orga','vigneron','collectif'], coop:true},
+      {t:"Créer un groupe de participants fidèles — « les amis du vignoble » — qui reçoivent des nouvelles du territoire, sont invités en avant-première et jouent un rôle d'ambassadeurs.", actors:['orga','vigneron'], coop:true},
+      {t:"Co-construire l'itinéraire et le contenu de la randonnée avec les vignerons concernés, plutôt que de les informer après coup — pour que l'offre reflète ce qu'ils veulent vraiment montrer.", actors:['orga','guide','vigneron'], coop:true},
+      {t:"Proposer une version de la randonnée où les participants viennent avec leurs enfants, pour toucher les familles et ancrer l'offre dans la vie locale — pas seulement dans le tourisme adulte.", actors:['orga','guide'], coop:true},
+      {t:"Inviter d'autres prestataires locaux (kayak, thermalisme, patrimoine) à proposer un prolongement de l'offre le lendemain, pour construire un séjour complet centré sur le territoire.", actors:['orga','heberg','collectif'], coop:true},
+    ]
+  },
+  {
+    num:'Dimension 6', title:'Circularité & ancrage territorial',
+    sub:'Être circulaire par design · Être ancrée dans le local',
+    css:'dim-6',
+    intro:"Une offre ancrée dans un territoire utilise ce que le territoire produit, s'appuie sur ceux qui y vivent, et y laisse de la valeur plutôt que d'en extraire. Concrètement, pour une randonnée : d'où vient le pique-nique ? Comment les participants arrivent-ils ? Que repart-il dans leurs valises — et d'où ça vient ? Une offre circulaire ne produit pas de déchets inutiles et ne dépend pas de ressources importées quand des alternatives locales existent. Les suggestions de cette partie vous invitent à passer en revue chaque élément de votre offre — du transport au repas en passant par la communication — pour voir ce qui peut être relocalisé, mutualisé ou simplifié.",
+    qs:[
+      {t:"Remplacer le « pique-nique tiré du sac » par un panier pique-nique composé exclusivement de produits locaux (moins de 30 km) préparés par un producteur ou traiteur du territoire.", actors:['orga','resto'], coop:true},
+      {t:"Proposer une gourde réutilisable aux participants en début de randonnée plutôt que des bouteilles d'eau en plastique, et prévoir des points de remplissage en eau potable sur le parcours.", actors:['orga','guide'], coop:true},
+      {t:"Afficher sur la fiche de l'offre le nom et la commune de chaque domaine visité, pour ancrer concrètement l'offre dans la géographie du territoire — pas seulement dans l'appellation.", actors:['orga'], coop:false},
+      {t:"Choisir un point de départ accessible en transport en commun depuis Aix-les-Bains, et l'indiquer comme option principale sur la fiche de l'offre.", actors:['orga','collectif'], coop:true},
+      {t:"Proposer aux participants de repartir avec un produit local acheté directement à un producteur rencontré pendant la randonnée — fromage, miel, conserve — en plus ou à la place d'une bouteille de vin.", actors:['guide','vigneron'], coop:true},
+      {t:"Utiliser des supports de communication imprimés sur papier recyclé ou certifié, ou privilégier une communication entièrement numérique avec un code QR vers la fiche de l'offre.", actors:['orga'], coop:false},
+      {t:"Travailler avec la collectivité pour que le balisage de la randonnée soit entretenu et partagé avec d'autres usages (promenades familiales, circuits VTT) — pour rentabiliser l'infrastructure commune.", actors:['orga','collectif'], coop:true},
+      {t:"Proposer une option d'hébergement chez l'habitant ou dans un gîte du territoire pour les participants qui viennent de loin, et orienter vers des hébergeurs engagés dans une démarche responsable.", actors:['orga','heberg'], coop:true},
+      {t:"Évaluer, même simplement, l'empreinte carbone de l'offre — déplacements des participants, repas, matériel — et partager ce chiffre honnêtement avec les participants.", actors:['orga'], coop:false},
+      {t:"Travailler avec la collectivité à la création d'un « label vignoble vivant de Savoie » commun, qui distinguerait les domaines engagés dans des pratiques régénératives sur tout le territoire.", actors:['orga','vigneron','collectif'], coop:true},
+    ]
+  },
+];
+
+const CHOICES = [
+  {val:'oui',   label:'✓ Je veux',           cls:'sel-oui'},
+  {val:'adapt', label:'✏ Je veux, en adaptant', cls:'sel-adapt'},
+  {val:'later', label:'⏳ Plus tard',          cls:'sel-later'},
+  {val:'non',   label:'✗ Pas pour moi',       cls:'sel-non'},
+];
+
+let answers = {};
+let totalQ = 0;
+
+(function build(){
+  emailjs.init(CFG.publicKey);
+  const root = document.getElementById('questionnaire');
+  let gn = 0;
+  DIMS.forEach((dim, di) => {
+    const sec = document.createElement('section');
+    sec.className = `theme-block ${dim.css}`;
+    const actorChips = (actors, coop) => {
+      let h = actors.map(a => `<span class="actor-chip">${ACTORS[a]}</span>`).join('');
+      if(coop && actors.length > 1) h += `<span class="coop-chip">↔ coopération</span>`;
+      return h;
+    };
+    const choiceBtns = (id) => CHOICES.map(c =>
+      `<button class="cb" data-id="${id}" data-val="${c.val}" onclick="pick('${id}','${c.val}')">${c.label}</button>`
+    ).join('');
+    let html = `<div class="theme-header">
+      <div class="theme-num">${dim.num}</div>
+      <div class="theme-title">${dim.title}</div>
+      <div class="theme-sub">${dim.sub}</div>
+      <div class="theme-intro">${dim.intro}</div>
+    </div><div class="questions-list">`;
+    dim.qs.forEach((q, qi) => {
+      const id = `q_${di}_${qi}`; gn++; totalQ++;
+      html += `<div class="question-row">
+        <div class="q-header"><span class="q-num">${gn}</span><span class="q-text">${q.t}</span></div>
+        <div class="q-actors">${actorChips(q.actors, q.coop)}</div>
+        <div class="choice-row">${choiceBtns(id)}</div>
+      </div>`;
+    });
+    sec.innerHTML = html + '</div>';
+    root.appendChild(sec);
+  });
+  updateStats();
+})();
+
+function pick(id, val) {
+  answers[id] = val;
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(b => {
+    b.className = 'cb' + (b.getAttribute('data-val') === val ? ' ' + CHOICES.find(c=>c.val===val).cls : '');
+  });
+  updateStats();
+}
+
+function updateStats() {
+  let oui=0, adapt=0, later=0, non=0, answered=0;
+  Object.values(answers).forEach(v => {
+    answered++;
+    if(v==='oui') oui++;
+    else if(v==='adapt') adapt++;
+    else if(v==='later') later++;
+    else non++;
+  });
+  document.getElementById('cnt-oui').textContent = oui;
+  document.getElementById('cnt-adapt').textContent = adapt;
+  document.getElementById('cnt-later').textContent = later;
+  document.getElementById('cnt-non').textContent = non;
+  const pct = totalQ > 0 ? Math.round(answered / totalQ * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-legend').textContent = `${answered} / ${totalQ} suggestions évaluées`;
+}
+
+function resetAll() {
+  if(!confirm('Réinitialiser toutes les réponses ?')) return;
+  answers = {};
+  document.querySelectorAll('.cb').forEach(b => b.className = 'cb');
+  updateStats();
+}
+
+function openModal() {
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('modal-status').textContent = '';
+  document.getElementById('modal-status').className = 'modal-status';
+  const btn = document.getElementById('btn-validate');
+  btn.disabled = false;
+  btn.textContent = 'Envoyer le rapport';
+  if(document.getElementById('participants-list').children.length === 0) ajouterParticipant();
+}
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+
+let participantCount = 0;
+
+function ajouterParticipant() {
+  const list = document.getElementById('participants-list');
+  const id = ++participantCount;
+  const row = document.createElement('div');
+  row.className = 'participant-row';
+  row.id = `prow-${id}`;
+  row.innerHTML = `
+    <input type="text" placeholder="Prénom Nom" id="pname-${id}">
+    <input type="email" placeholder="mail@exemple.com" id="pmail-${id}">
+    <button class="btn-remove-p" onclick="retirerParticipant(${id})" title="Retirer">✕</button>`;
+  list.appendChild(row);
+}
+
+function retirerParticipant(id) {
+  const row = document.getElementById(`prow-${id}`);
+  if(row) row.remove();
+}
+
+function getParticipants() {
+  const rows = document.querySelectorAll('.participant-row');
+  const result = [];
+  rows.forEach(row => {
+    const idMatch = row.id.match(/prow-(\d+)/);
+    if(!idMatch) return;
+    const id = idMatch[1];
+    const name = (document.getElementById(`pname-${id}`) || {}).value.trim();
+    const mail = (document.getElementById(`pmail-${id}`) || {}).value.trim();
+    if(mail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) result.push({name: name || mail, mail});
+  });
+  return result;
+}
+
+async function envoyerRapport() {
+  const org    = document.getElementById('inp-org').value.trim();
+  const status = document.getElementById('modal-status');
+  const btn    = document.getElementById('btn-validate');
+  const participants = getParticipants();
+
+  if(!org) { status.textContent='Veuillez indiquer le nom de votre organisation.'; status.className='modal-status err'; return; }
+  if(participants.length === 0) { status.textContent='Veuillez ajouter au moins un participant avec une adresse mail valide.'; status.className='modal-status err'; return; }
+
+  btn.disabled = true; btn.textContent = 'Envoi en cours…'; status.textContent = '';
+
+  let oui=0,adapt=0,later=0,non=0,answered=0;
+  Object.values(answers).forEach(v=>{answered++;if(v==='oui')oui++;else if(v==='adapt')adapt++;else if(v==='later')later++;else non++;});
+
+  const participantsStr = participants.map(p => p.name).join(', ');
+  let summary = `OOB 05 — Randonnée Route des Vins de Savoie
+`;
+  summary += `Organisation : ${org}
+`;
+  summary += `Participants : ${participantsStr}
+`;
+  summary += `Suggestions évaluées : ${answered}/${totalQ}
+
+`;
+  summary += `✓ Je veux : ${oui}
+✏ Je veux, en adaptant : ${adapt}
+⏳ Plus tard : ${later}
+✗ Pas pour moi : ${non}
+
+`;
+  summary += `DÉTAIL PAR DIMENSION :
+`;
+  DIMS.forEach((dim,di)=>{
+    summary += `
+${dim.num} — ${dim.title}
+`;
+    dim.qs.forEach((q,qi)=>{
+      const a = answers[`q_${di}_${qi}`];
+      const rep = a==='oui'?'✓ Je veux':a==='adapt'?'✏ En adaptant':a==='later'?'⏳ Plus tard':a==='non'?'✗ Pas pour moi':'— Non répondu';
+      summary += `  Q${qi+1} : ${rep}
+     → ${q.t.substring(0,90)}...
+`;
+    });
+  });
+
+  try {
+    for(const p of participants) {
+      await emailjs.send(CFG.serviceId, CFG.templateId, {
+        to_email:   p.mail,
+        bcc_email:  CFG.adminBcc,
+        org_name:   org,
+        to_name:    p.name,
+        participants: participantsStr,
+        answered, total: totalQ,
+        cnt_oui: oui, cnt_adapt: adapt, cnt_later: later, cnt_non: non,
+        summary,
+        lien_questionnaire: 'https://oeforgood.github.io/questionnaire-regen-oob05/',
+      });
+    }
+    status.textContent = `✓ Rapport envoyé à ${participants.length} participant(s) ! Vérifiez vos boîtes mail.`;
+    status.className = 'modal-status ok';
+    btn.textContent = 'Envoyé ✓';
+  } catch(err) {
+    console.error('EmailJS:', err);
+    status.textContent = "Erreur d'envoi. Vérifiez votre connexion et réessayez.";
+    status.className = 'modal-status err';
+    btn.disabled = false; btn.textContent = 'Envoyer le rapport';
+  }
+}
+</script>
+</body>
+</html>
